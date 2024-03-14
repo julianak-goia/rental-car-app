@@ -15,7 +15,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        //
+        $marcas = Marca::all();
+        return $marcas;
     }
 
     /**
@@ -34,9 +35,13 @@ class MarcaController extends Controller
      * @param  \App\Http\Requests\StoreMarcaRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreMarcaRequest $request)
+    public function store(StoreMarcaRequest $request) //$request traz o body da requisição
     {
-        //
+        // inserindo um registro
+        $marca = Marca::create($request->all());
+        // dd($request)
+        // dd($marca);
+        return $marca;
     }
 
     /**
@@ -45,9 +50,9 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function show(Marca $marca)
+    public function show(Marca $marca) //$marca é um objeto
     {
-        //
+        return $marca;
     }
 
     /**
@@ -64,13 +69,18 @@ class MarcaController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateMarcaRequest  $request
-     * @param  \App\Models\Marca  $marca
+     * @param  \App\Http\Requests\UpdateMarcaRequest
+     * @param  \App\Models\Marca
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateMarcaRequest $request, Marca $marca)
     {
-        //
+        // print_r($request->all()); //os dados atualizados
+        // echo '<hr>';
+        // print_r($marca->getAttributes()); //os dados antigos
+
+        $marca->update($request->all());
+        return $marca;
     }
 
     /**
@@ -81,6 +91,8 @@ class MarcaController extends Controller
      */
     public function destroy(Marca $marca)
     {
-        //
+        // print_r($marca->getAttrites());
+        $marca->delete();
+        return ['msg' => 'A marca foi removida com sucesso.'];
     }
 }
